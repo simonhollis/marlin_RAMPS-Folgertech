@@ -280,6 +280,9 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 // default settings 
 
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,3840,90}  // default steps per unit for ultimaker {78.7402,78.7402,200*8/3,760*1.1}920
+// SJH added lines to automatically adjust ESTEPS for dual extruder setup
+#define DEFAULT_EXTRUDER_0_ESTEPS 190
+#define DEFAULT_EXTRUDER_1_ESTEPS 90
 #define DEFAULT_MAX_FEEDRATE          {250, 250, 2, 22}    // (mm/sec)    
 #define DEFAULT_MAX_ACCELERATION      {1000,1000,5,1000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 

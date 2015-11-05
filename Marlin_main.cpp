@@ -1768,9 +1768,18 @@ void process_commands()
         }
       }
       #endif
+      // SJH if section next
+      if(active_extruder == 0) { 
+        axis_steps_per_unit[3] = DEFAULT_EXTRUDER_0_ESTEPS; // E0 Steps
+      }
+      else if (active_extruder == 1) {
+        axis_steps_per_unit[3] = DEFAULT_EXTRUDER_1_ESTEPS; // E1 Steps
+      }
       SERIAL_ECHO_START;
       SERIAL_ECHO(MSG_ACTIVE_EXTRUDER);
       SERIAL_PROTOCOLLN((int)active_extruder);
+      SERIAL_ECHO(MSG_NEW_ESTEPS);
+      SERIAL_PROTOCOLLN((int)axis_steps_per_unit[3]);
     }
   }
 

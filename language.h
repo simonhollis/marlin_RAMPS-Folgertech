@@ -156,6 +156,7 @@
 	#define MSG_RESEND "Resend: "
 	#define MSG_UNKNOWN_COMMAND "Unknown command: \""
 	#define MSG_ACTIVE_EXTRUDER "Active Extruder: "
+  #define MSG_NEW_ESTEPS "New Extruder E-steps: "
 	#define MSG_INVALID_EXTRUDER "Invalid extruder"
 	#define MSG_X_MIN "x_min: "
 	#define MSG_X_MAX "x_max: "
