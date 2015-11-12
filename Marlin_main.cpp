@@ -212,6 +212,9 @@ unsigned long stoptime=0;
 
 static uint8_t tmp_extruder;
 
+// SJH Add below
+static void light_set(int value);
+static int8_t m42_iterator;
 
 bool Stopped=false;
 
@@ -376,8 +379,18 @@ void setup()
   setup_photpin();
   
   lcd_init();
+
+  light_set(100); // SJH: Turn on LED lamps 
+
 }
 
+// SJH Added routine to set LED lights on LIGHT_PIN pin
+static void light_set(int value)
+{
+  pinMode(LIGHT_PIN, OUTPUT);
+  digitalWrite(LIGHT_PIN, value);
+  analogWrite(LIGHT_PIN, value);
+}
 
 void loop()
 {
@@ -971,19 +984,31 @@ void process_commands()
       if (code_seen('S'))
       {
         int pin_status = code_value();
+          
         int pin_number = LED_PIN;
-        if (code_seen('P') && pin_status >= 0 && pin_status <= 255)
-          pin_number = code_value();
-        for(int8_t i = 0; i < (int8_t)sizeof(sensitive_pins); i++)
+        if (code_seen('P') && pin_status >= 0 && pin_status <= 255) 
         {
-          if (sensitive_pins[i] == pin_number)
+          pin_number = code_value();
+        }
+        // iterator for sensitive_pins loop is statically allocated, since
+        // dynamic allocation here seems to lead to corruption
+        m42_iterator = 0 ;
+        while(m42_iterator < (int8_t)sizeof(sensitive_pins))
+        {
+          if (sensitive_pins[m42_iterator] == pin_number)
           {
+            SERIAL_ECHOLN("M42 requested sensitive pin change. Ignoring");
             pin_number = -1;
             break;
           }
+          m42_iterator++;
         }
         if (pin_number > -1)
         {
+          SERIAL_ECHO("Setting pin ");
+          SERIAL_ECHO(pin_number);
+          SERIAL_ECHO(" to value ");
+          SERIAL_ECHOLN(pin_status);
           pinMode(pin_number, OUTPUT);
           digitalWrite(pin_number, pin_status);
           analogWrite(pin_number, pin_status);

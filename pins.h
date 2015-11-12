@@ -354,6 +354,7 @@
 #define SDPOWER            -1
 #define SDSS               53
 #define LED_PIN            13
+#define LIGHT_PIN          5 // External LED bed lamps
 
 /*
  * ==Dual fan expander instructions from Oozenest.com==
