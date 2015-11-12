@@ -8,7 +8,7 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+ f
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -224,6 +224,7 @@ bool Stopped=false;
 
 void get_arc_coordinates();
 bool setTargetedHotend(int code);
+static void lights_set(int value);
 
 void serial_echopair_P(const char *s_P, float v)
     { serialprintPGM(s_P); SERIAL_ECHO(v); }
@@ -380,12 +381,12 @@ void setup()
   
   lcd_init();
 
-  light_set(100); // SJH: Turn on LED lamps 
+  lights_set(100); // SJH: Turn on LED lamps 
 
 }
 
 // SJH Added routine to set LED lights on LIGHT_PIN pin
-static void light_set(int value)
+static void lights_set(int value)
 {
   pinMode(LIGHT_PIN, OUTPUT);
   digitalWrite(LIGHT_PIN, value);

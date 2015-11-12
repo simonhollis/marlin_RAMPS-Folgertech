@@ -40,6 +40,7 @@ static void lcd_control_temperature_preheat_pla_settings_menu();
 static void lcd_control_temperature_preheat_abs_settings_menu();
 static void lcd_control_motion_menu();
 static void lcd_control_retract_menu();
+static void lcd_control_lights_menu();
 static void lcd_sdcard_menu();
 static void lcd_cooldown_all();
 static void lcd_cooldown_extruders();
@@ -98,6 +99,7 @@ static void menu_action_setting_edit_long5(const char* pstr, unsigned long* ptr,
 
 /** Used variables to keep track of the menu */
 volatile uint8_t buttons;//Contains the bits of the currently pressed buttons.
+
 
 uint8_t currentMenuViewOffset;              /* scroll offset in the current menu */
 uint32_t blocking_enc;
@@ -454,6 +456,7 @@ static void lcd_control_menu()
     START_MENU();
     MENU_ITEM(back, MSG_MAIN, lcd_main_menu);
     MENU_ITEM(submenu, MSG_TEMPERATURE, lcd_control_temperature_menu);
+    MENU_ITEM(submenu, MSG_LIGHTS, lcd_control_lights_menu);
     MENU_ITEM(submenu, MSG_MOTION, lcd_control_motion_menu);
 #ifdef FWRETRACT
     MENU_ITEM(submenu, MSG_RETRACT, lcd_control_retract_menu);
@@ -465,6 +468,26 @@ static void lcd_control_menu()
     MENU_ITEM(function, MSG_RESTORE_FAILSAFE, Config_ResetDefault);
     END_MENU();
 }
+
+static int lights_brightness;
+
+// SJH Added routine to set LED lights on LIGHT_PIN pin
+static void lights_update()
+{
+  pinMode(LIGHT_PIN, OUTPUT);
+  digitalWrite(LIGHT_PIN, lights_brightness);
+  analogWrite(LIGHT_PIN, lights_brightness);
+}
+
+static void lcd_control_lights_menu()
+{
+  START_MENU();
+  MENU_ITEM(back, MSG_CONTROL, lcd_control_menu);
+  MENU_ITEM_EDIT(int3, MSG_LIGHTS_BRIGHTNESS, &lights_brightness, 0, 255);
+  MENU_ITEM(function, MSG_LIGHTS_UPDATE, lights_update);
+  END_MENU();
+}
+
 
 static void lcd_control_temperature_menu()
 {
