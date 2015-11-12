@@ -344,11 +344,11 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 // Preheat Constants
 #define PLA_PREHEAT_HOTEND_TEMP 210 
 #define PLA_PREHEAT_HPB_TEMP 70
-#define PLA_PREHEAT_FAN_SPEED 255		// Insert Value between 0 and 255
+#define PLA_PREHEAT_FAN_SPEED 100		// Insert Value between 0 and 255
 
 #define ABS_PREHEAT_HOTEND_TEMP 235
 #define ABS_PREHEAT_HPB_TEMP 110
-#define ABS_PREHEAT_FAN_SPEED 255		// Insert Value between 0 and 255
+#define ABS_PREHEAT_FAN_SPEED 0		// Insert Value between 0 and 255
 
 
 #ifdef ULTIPANEL
