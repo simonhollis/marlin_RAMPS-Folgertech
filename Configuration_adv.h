@@ -78,7 +78,8 @@
 // This defines the number of extruders
 #define EXTRUDERS 2
 
-#define ENDSTOPS_ONLY_FOR_HOMING // If defined the endstops will only be used for homing
+// SJH: Use endstops for preventing under/over movement too
+// #define ENDSTOPS_ONLY_FOR_HOMING // If defined the endstops will only be used for homing
 
 
 //// AUTOSET LOCATIONS OF LIMIT SWITCHES

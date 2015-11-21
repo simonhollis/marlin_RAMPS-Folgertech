@@ -211,6 +211,7 @@
 #endif
 
 #ifdef ENDSTOPPULLUPS
+// SJH: TODO: Update to support XMAX/YMAX ENDSTOPS
 //  #define ENDSTOPPULLUP_XMAX
 //  #define ENDSTOPPULLUP_YMAX
 //  #define ENDSTOPPULLUP_ZMAX
@@ -250,6 +251,7 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 #define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
 
+// SJH: TODO: disable software endstops when hardware ones fitted
 #define min_software_endstops false //If true, axis won't move to coordinates less than HOME_POS.
 #define max_software_endstops true  //If true, axis won't move to coordinates greater than the defined lengths below.
 // Travel limits after homing
@@ -298,7 +300,7 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 #define EXTRUDER_OFFSET_Y {0.0, 83.50}  // (in mm) for each extruder, offset of the hotend on the Y axis
 // ABSOLUTE OFFSETS (relative to heated bed edges)
 // X: E0: 58.0mm E1: 67.5mm
-// Y: E0: 37.0mm E1: 120.5 mm 
+// Y: E0: 37.0mm E1: 120.5 mm F
 
 // The speed change that does not require acceleration (i.e. the software might assume it can be done instanteneously)
 #define DEFAULT_XYJERK                20.0    // (mm/sec)
