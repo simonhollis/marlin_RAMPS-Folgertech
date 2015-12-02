@@ -211,9 +211,9 @@
 #endif
 
 #ifdef ENDSTOPPULLUPS
-// SJH: TODO: Update to support XMAX/YMAX ENDSTOPS
-//  #define ENDSTOPPULLUP_XMAX
-//  #define ENDSTOPPULLUP_YMAX
+// SJH: DONE: Update to support XMAX/YMAX ENDSTOPS
+  #define ENDSTOPPULLUP_XMAX
+  #define ENDSTOPPULLUP_YMAX
 //  #define ENDSTOPPULLUP_ZMAX
   #define ENDSTOPPULLUP_XMIN
   #define ENDSTOPPULLUP_YMIN
@@ -277,7 +277,8 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 
 //// MOVEMENT SETTINGS
 #define NUM_AXIS 4 // The axis order in all axis related arrays is X, Y, Z, E
-#define HOMING_FEEDRATE {50*60, 50*60, 50, 0}  // set the homing speeds (mm/min)
+// SJH: Updated Z feed-rate from 50
+#define HOMING_FEEDRATE {50*60, 50*60, 50*3, 0}  // set the homing speeds (mm/min)
 
 // default settings 
 
