@@ -212,12 +212,12 @@
 
 #ifdef ENDSTOPPULLUPS
 // SJH: DONE: Update to support XMAX/YMAX ENDSTOPS
-  #define ENDSTOPPULLUP_XMAX
-  #define ENDSTOPPULLUP_YMAX
+//  #define ENDSTOPPULLUP_XMAX
+//  #define ENDSTOPPULLUP_YMAX
   #define ENDSTOPPULLUP_ZMAX
-  #define ENDSTOPPULLUP_XMIN
-  #define ENDSTOPPULLUP_YMIN
-  #define ENDSTOPPULLUP_ZMIN
+//  #define ENDSTOPPULLUP_XMIN
+//  #define ENDSTOPPULLUP_YMIN
+//  #define ENDSTOPPULLUP_ZMIN
 #endif
 
 // The pullups are needed if you directly connect a mechanical endswitch between the signal and ground pins.
