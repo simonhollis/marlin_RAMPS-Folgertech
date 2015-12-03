@@ -1781,6 +1781,21 @@ void process_commands()
         // Offset extruder (only by XY)
         int i;
         for(i = 0; i < 2; i++) {
+           // SJH echoes
+           SERIAL_ECHO_START;
+           SERIAL_ECHO("Change to extruder ");
+           SERIAL_ECHOLN((int) tmp_extruder);
+           //SERIAL_ECHO_START;
+          // SERIAL_ECHO(". Offset was ");
+          // SERIAL_ECHO(extruder_offset[i][active_extruder]);
+          // SERIAL_ECHO(" offset now is ");
+         //  SERIAL_ECHOLN(extruder_offset[i][tmp_extruder]);
+           SERIAL_ECHO_START;
+           SERIAL_ECHO("Current position: ");
+           SERIAL_ECHO(current_position[i]);
+           SERIAL_ECHO(". New position will be ");
+           SERIAL_ECHOLN(current_position[i] - extruder_offset[i][active_extruder] + extruder_offset[i][tmp_extruder]);
+           // end SJH
            current_position[i] = current_position[i] - 
                                  extruder_offset[i][active_extruder] +
                                  extruder_offset[i][tmp_extruder];
