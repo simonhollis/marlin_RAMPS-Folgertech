@@ -44,6 +44,7 @@ static void lcd_control_lights_menu();
 static void lcd_sdcard_menu();
 static void lcd_cooldown_all();
 static void lcd_cooldown_extruders();
+static void lcd_set_bedhot();
 
 static void lcd_quick_feedback();//Cause an LCD refresh, and give the user visual or audiable feedback that something has happend
 
@@ -186,6 +187,7 @@ static void lcd_main_menu()
     MENU_ITEM(back, MSG_WATCH, lcd_status_screen);
     // SJH
     MENU_ITEM(submenu, MSG_MOVE_AXIS, lcd_move_menu);
+    MENU_ITEM(function, MSG_SET_BEDHOT, lcd_set_bedhot);
     // End SJH    
     if (movesplanned() || IS_SD_PRINTING)
     {
@@ -229,7 +231,7 @@ static void lcd_autostart_sd()
 }
 #endif
 
-void lcd_preheat_pla()
+static void lcd_preheat_pla()
 {
     //SJH setTargetHotend0(plaPreheatHotendTemp);
     setTargetHotend1(plaPreheatHotendTemp);
@@ -239,7 +241,7 @@ void lcd_preheat_pla()
     lcd_return_to_status();
 }
 
-void lcd_preheat_abs()
+static void lcd_preheat_abs()
 {
     setTargetHotend0(absPreheatHotendTemp);
     // SJH setTargetHotend1(absPreheatHotendTemp);
@@ -247,6 +249,12 @@ void lcd_preheat_abs()
     setTargetBed(absPreheatHPBTemp);
     fanSpeed = absPreheatFanSpeed;
     lcd_return_to_status();
+}
+
+static void lcd_set_bedhot()
+{
+  target_temperature_bed = 90;
+  lcd_return_to_status();
 }
 
 static void lcd_tune_menu()

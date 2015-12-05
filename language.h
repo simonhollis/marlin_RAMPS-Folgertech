@@ -120,6 +120,7 @@
 	#define MSG_FILAMENTCHANGE "Change filament"
 	#define MSG_INIT_SDCARD "Init. SD-Card"	
 	#define MSG_CNG_SDCARD "Change SD-Card"
+  #define MSG_SET_BEDHOT "Preheat Bed"
 
 // Serial Console Messages
 
@@ -148,7 +149,7 @@
 	#define MSG_M218_INVALID_EXTRUDER "M218 Invalid extruder "
 	#define MSG_ERR_NO_THERMISTORS "No thermistors - no temperature"
 	#define MSG_M109_INVALID_EXTRUDER "M109 Invalid extruder "
-	#define MSG_HEATING "Heating..."
+	#define MSG_HEATING "Heating extruder..."
 	#define MSG_HEATING_COMPLETE "Heating done."
 	#define MSG_BED_HEATING "Bed Heating."
 	#define MSG_BED_DONE "Bed done."
