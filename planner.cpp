@@ -523,6 +523,8 @@ void plan_buffer_line(const float &x, const float &y, const float &z, const floa
     {
       position[E_AXIS]=target[E_AXIS]; //behave as if the move really took place, but ignore E part
       SERIAL_ECHO_START;
+      SERIAL_ECHO("Extruder ");
+      SERIAL_ECHO(active_extruder);
       SERIAL_ECHOLNPGM(MSG_ERR_COLD_EXTRUDE_STOP);
     }
     
