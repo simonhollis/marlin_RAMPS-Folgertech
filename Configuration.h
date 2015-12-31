@@ -284,7 +284,7 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 
 // SJH added lines to automatically adjust ESTEPS for dual extruder setup
 #define DEFAULT_EXTRUDER_0_ESTEPS 190
-#define DEFAULT_EXTRUDER_1_ESTEPS 90
+#define DEFAULT_EXTRUDER_1_ESTEPS 95
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,3840,DEFAULT_EXTRUDER_0_ESTEPS}  // default steps per unit for Folgertech with compact extruder addition
 
 
