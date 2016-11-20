@@ -136,7 +136,7 @@ unsigned long watchmillis[EXTRUDERS] = ARRAY_BY_EXTRUDERS(0,0,0);
 //===========================================================================
 //=============================   functions      ============================
 //===========================================================================
-
+extern void set_fans_ext(int fan1, int fan2) ;
 void PID_autotune(float temp, int extruder, int ncycles)
 {
   float input = 0.0;
@@ -382,6 +382,24 @@ void manage_heater()
       soft_pwm[e] = 0;
     }
 
+     //SJH
+     if (current_temperature[e] > FAN_ON_TEMP && e == 0) {
+        set_fans_ext(255, -1) ;
+        //SERIAL_ECHOLN("Setting extruder 0 fan on") ;
+     }
+     if (current_temperature[e] > FAN_ON_TEMP && e == 1) {
+        set_fans_ext(-1, 255) ;
+        //SERIAL_ECHOLN("Setting extruder 1 fan on") ;
+     }
+     if (current_temperature[e] < FAN_ON_TEMP && e == 0) {
+        set_fans_ext(0, -1) ;
+        //SERIAL_ECHOLN("Setting extruder 0 fan off") ;
+     }
+     if (current_temperature[e] < FAN_ON_TEMP && e == 1) {
+        set_fans_ext(-1, 0) ;
+        //SERIAL_ECHOLN("Setting extruder 1 fan off") ;
+     }
+
     #ifdef WATCH_TEMP_PERIOD
     if(watchmillis[e] && millis() - watchmillis[e] > WATCH_TEMP_PERIOD)
     {
@@ -603,7 +621,7 @@ void tp_init()
     setPwmFrequency(FAN_PIN, 1); // No prescaling. Pwm frequency = F_CPU/256/8
     #endif
     #ifdef FAN_SOFT_PWM
-	soft_pwm_fan=(unsigned char)fanSpeed;
+	soft_pwm_fan=(unsigned char)peed;
 	#endif
   #endif  
 
@@ -939,7 +957,7 @@ ISR(TIMER0_COMPB_vect)
     if(soft_pwm_b > 0) WRITE(HEATER_BED_PIN,1);
     #endif
     #ifdef FAN_SOFT_PWM
-    soft_pwm_fan =(unsigned char) fanSpeed;
+    soft_pwm_fan =(unsigned char) peed;
     if(soft_pwm_fan > 0) WRITE(FAN_PIN,1);
     #endif
   }

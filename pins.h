@@ -355,6 +355,8 @@
 #define SDSS               53
 #define LED_PIN            13
 #define LIGHT_PIN          5 // External LED bed lamps
+#define FAN_EXT1_PIN       57 // External Fan 1
+#define FAN_EXT2_PIN       58 // External Fan 2
 
 /*
  * ==Dual fan expander instructions from Oozenest.com==
@@ -363,10 +365,10 @@
  * (2 Pin header provided if no pins soldered on D2).
  *
  * If your using dual extruders change Motherboard to 34 in Marlin Firmware. 
- * If using 1 extruder but need 2 fans, in Pins.h file under #if MOTHERBOARD == 33 || MOTHERBOARD == 35 
+ * If using 1 extruder but need 2 , in Pins.h file under #if MOTHERBOARD == 33 || MOTHERBOARD == 35 
  * change #define FAN_PIN 9 to #define FAN_PIN 4.
  *
- * Connect 1 or 2 Fans to FAN 1 or FAN 2 labelled on the fan extender, 
+ * Connect 1 or 2  to FAN 1 or FAN 2 labelled on the fan extender, 
  * use gcode commands M106 to control Fan 1 and M42 P5 to control Fan 2.
  * 
  */

@@ -14,11 +14,14 @@
 // SERIAL_PORT selects which serial port should be used for communication with the host.
 // This allows the connection of wireless adapters (for instance) to non-default port pins.
 // Serial port 0 is still used by the Arduino bootloader regardless of this setting.
-#define SERIAL_PORT 0
+// Set line below if BTENABLE not selected
+// #define SERIAL_PORT 0 (USB)
+#define BTENABLED
 
 // This determines the communication speed of the printer
-#define BAUDRATE 250000
-//#define BAUDRATE 115200
+//#define BAUDRATE 250000 # default SERIAL_PORT 0 (USB)
+//#define BAUDRATE 9600 // Bluetooth slow
+#define BAUDRATE 115200 // Bluetooth default
 
 //// The following define selects which electronics board you have. Please choose the one that matches your setup
 // 10 = Gen7 custom (Alfons3 Version) "https://github.com/Alfons3/Generation_7_Electronics"
@@ -238,7 +241,7 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 #define DISABLE_Z false
 #define DISABLE_E false // For all extruders
 
-#define INVERT_X_DIR false    // for Mendel set to false, for Orca set to true
+#define INVERT_X_DIR true    // for Mendel set to false, for Orca set to true
 #define INVERT_Y_DIR true    // for Mendel set to true, for Orca set to false
 #define INVERT_Z_DIR true     // for Mendel set to false, for Orca set to true
 #define INVERT_E0_DIR true   // for direct drive extruder v9 set to true, for geared extruder set to false
@@ -297,8 +300,8 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 // Offset of the extruders (uncomment if using more than one and relying on firmware to position when changing).
 // The offset has to be X=0, Y=0 for the extruder 0 hotend (default extruder).
 // For the other hotends it is their distance from the extruder 0 hotend.
-#define EXTRUDER_OFFSET_X {0.0, -1.5} // (in mm) for each extruder, offset of the hotend on the X axis
-#define EXTRUDER_OFFSET_Y {0.0, 86.5}  // (in mm) for each extruder, offset of the hotend on the Y axis
+#define EXTRUDER_OFFSET_X {0.0, 1.3} // (in mm) for each extruder, offset of the hotend on the X axis 2.0
+#define EXTRUDER_OFFSET_Y {0.0, 87.0}  // (in mm) for each extruder, offset of the hotend on the Y axis 86.5
 
 //#define EXTRUDER_OFFSET_X {0.0, 0.0} // (in mm) for each extruder, offset of the hotend on the X axis
 //#define EXTRUDER_OFFSET_Y {0.0, 0.0}  // (in mm) for each extruder, offset of the hotend on the Y ax

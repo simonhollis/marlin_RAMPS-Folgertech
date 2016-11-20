@@ -71,6 +71,9 @@
 // before setting a PWM value. (Does not work with software PWM for fan on Sanguinololu)
 //#define FAN_KICKSTART_TIME 100
 
+// What temperature to start running the extruder cooling fans at?
+#define FAN_ON_TEMP 40
+
 //===========================================================================
 //=============================Mechanical Settings===========================
 //===========================================================================

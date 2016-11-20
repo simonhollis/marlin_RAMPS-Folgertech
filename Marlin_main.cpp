@@ -222,10 +222,12 @@ bool Stopped=false;
 //=============================ROUTINES=============================
 //===========================================================================
 
+
 void get_arc_coordinates();
 bool setTargetedHotend(int code);
 static void lights_set(int value);
-
+static void fans_setup(int value);
+void set_fans_ext(int fan1, int fan2);
 void serial_echopair_P(const char *s_P, float v)
     { serialprintPGM(s_P); SERIAL_ECHO(v); }
 void serial_echopair_P(const char *s_P, double v)
@@ -382,6 +384,7 @@ void setup()
   lcd_init();
 
   lights_set(100); // SJH: Turn on LED lamps 
+  fans_setup(255) ; // SJH: Set up fan pins
 
 }
 
@@ -391,6 +394,27 @@ static void lights_set(int value)
   pinMode(LIGHT_PIN, OUTPUT);
   digitalWrite(LIGHT_PIN, value);
   analogWrite(LIGHT_PIN, value);
+}
+
+// SJH added routine to setup fan outputs and control them
+static void fans_setup(int value)
+{
+  pinMode(FAN_EXT1_PIN, OUTPUT);
+  pinMode(FAN_EXT2_PIN, OUTPUT);
+  digitalWrite(FAN_EXT1_PIN, 255);
+  digitalWrite(FAN_EXT2_PIN, 0);
+  delay(3000); // Delay to hear the fan spin up
+  digitalWrite(FAN_EXT1_PIN, 255);
+  digitalWrite(FAN_EXT2_PIN, 255);
+  delay(2000); // and the other fan
+}
+
+void set_fans_ext(int fan1, int fan2)
+{
+  pinMode(FAN_EXT1_PIN, OUTPUT);
+  pinMode(FAN_EXT2_PIN, OUTPUT);
+  if (fan1 != -1) digitalWrite(FAN_EXT1_PIN, fan1);
+  if (fan2 != -1) digitalWrite(FAN_EXT2_PIN, fan2); 
 }
 
 void loop()
