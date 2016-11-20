@@ -27,11 +27,11 @@
 
   extern int plaPreheatHotendTemp;
   extern int plaPreheatHPBTemp;
-  extern int plaPreheatpeed;
+  extern int plaPreheatFanSpeed;
 
   extern int absPreheatHotendTemp;
   extern int absPreheatHPBTemp;
-  extern int absPreheatpeed;
+  extern int absPreheatFanSpeed;
     
   #ifdef NEWPANEL
     #define EN_C (1<<BLEN_C)
