@@ -383,11 +383,12 @@ void manage_heater()
     }
 
      //SJH
-     if (current_temperature[e] > FAN_ON_TEMP && e == 0) {
+     // The < 5 is a safety case in case the temperature sensor fails (normall would read '0' then)
+     if (((current_temperature[e] > FAN_ON_TEMP) || (current_temperature[e] < 5)) && e == 0) {
         set_fans_ext(255, -1) ;
         //SERIAL_ECHOLN("Setting extruder 0 fan on") ;
      }
-     if (current_temperature[e] > FAN_ON_TEMP && e == 1) {
+     if (((current_temperature[e] > FAN_ON_TEMP) || (current_temperature[e] < 5)) && e == 1) {
         set_fans_ext(-1, 255) ;
         //SERIAL_ECHOLN("Setting extruder 1 fan on") ;
      }
