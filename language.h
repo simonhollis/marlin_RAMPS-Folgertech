@@ -43,6 +43,8 @@
 	#define MSG_MAIN "Main"
 	#define MSG_AUTOSTART "Autostart"
 	#define MSG_DISABLE_STEPPERS "Disable Steppers"
+  #define MSG_SWITCH_E0 "Select Ext 0"
+  #define MSG_SWITCH_E1 "Select Ext 1"
 	#define MSG_AUTO_HOME "Auto Home"
 	#define MSG_SET_ORIGIN "Set Origin"
 	#define MSG_PREHEAT_PLA "Preheat PLA (E1)"

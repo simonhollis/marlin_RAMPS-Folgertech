@@ -392,11 +392,11 @@ void manage_heater()
         set_fans_ext(-1, 255) ;
         //SERIAL_ECHOLN("Setting extruder 1 fan on") ;
      }
-     if (current_temperature[e] < FAN_ON_TEMP && e == 0) {
+     if (current_temperature[e] < (FAN_ON_TEMP - 2) && e == 0) {
         set_fans_ext(0, -1) ;
         //SERIAL_ECHOLN("Setting extruder 0 fan off") ;
      }
-     if (current_temperature[e] < FAN_ON_TEMP && e == 1) {
+     if (current_temperature[e] < (FAN_ON_TEMP - 2) && e == 1) {
         set_fans_ext(-1, 0) ;
         //SERIAL_ECHOLN("Setting extruder 1 fan off") ;
      }

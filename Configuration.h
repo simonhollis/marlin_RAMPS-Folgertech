@@ -8,7 +8,7 @@
 //User specified version info of this build to display in [Pronterface, etc] terminal window during startup.
 //Implementation of an idea by Prof Braino to inform user that any changes made
 //to this build by the user have been successfully uploaded into firmware.
-#define STRING_VERSION_CONFIG_H __DATE__ "  20-OCT-15 " __TIME__ // build date and time
+#define STRING_VERSION_CONFIG_H __DATE__ "  16-MAY-17 " __TIME__ // build date and time
 #define STRING_CONFIG_H_AUTHOR "(Simon Hollis, 2020 i3 Prusa Config)" //Who made the changes.
 
 // SERIAL_PORT selects which serial port should be used for communication with the host.
@@ -85,8 +85,8 @@
 // 52 is 200k thermistor - ATC Semitec 204GT-2 (1k pullup)
 // 55 is 100k thermistor - ATC Semitec 104GT-2 (Used in ParCan) (1k pullup)
 
-#define TEMP_SENSOR_0 6 // Replacemen EPCOS. Original was '5'
-#define TEMP_SENSOR_1 6
+#define TEMP_SENSOR_0 5 // Replacemen EPCOS. Original was '5'
+#define TEMP_SENSOR_1 5
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_BED 6
 
@@ -106,10 +106,10 @@
 // When temperature exceeds max temp, your heater will be switched off.
 // This feature exists to protect your hotend from overheating accidentally, but *NOT* from thermistor short/failure!
 // You should use MINTEMP for thermistor short/failure protection.
-#define HEATER_0_MAXTEMP 270
+#define HEATER_0_MAXTEMP 350
 #define HEATER_1_MAXTEMP 245
 #define HEATER_2_MAXTEMP 245
-#define BED_MAXTEMP 200
+#define BED_MAXTEMP 130
 
 // If your bed has low resistance e.g. .6 ohm and throws the fuse you can duty cycle it to reduce the
 // average current. The value should be an integer and the heat bed will be turned on for 1 interval of
@@ -245,7 +245,7 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 #define INVERT_Y_DIR true    // for Mendel set to true, for Orca set to false
 #define INVERT_Z_DIR true     // for Mendel set to false, for Orca set to true
 #define INVERT_E0_DIR true   // for direct drive extruder v9 set to true, for geared extruder set to false
-#define INVERT_E1_DIR true    // for direct drive extruder v9 set to true, for geared extruder set to false
+#define INVERT_E1_DIR false    // for direct drive extruder v9 set to true, for geared extruder set to false
 #define INVERT_E2_DIR false   // for direct drive extruder v9 set to true, for geared extruder set to false
 
 // ENDSTOP SETTINGS:
@@ -258,9 +258,9 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 #define min_software_endstops false //If true, axis won't move to coordinates less than HOME_POS.
 #define max_software_endstops true  //If true, axis won't move to coordinates greater than the defined lengths below.
 // Travel limits after homing
-#define X_MAX_POS 188
+#define X_MAX_POS 165
 #define X_MIN_POS 0
-#define Y_MAX_POS 195
+#define Y_MAX_POS 190
 #define Y_MIN_POS 0
 #define Z_MAX_POS 170
 #define Z_MIN_POS 0
@@ -286,8 +286,9 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 // default settings 
 
 // SJH added lines to automatically adjust ESTEPS for dual extruder setup
-#define DEFAULT_EXTRUDER_0_ESTEPS 190
-#define DEFAULT_EXTRUDER_1_ESTEPS 95
+#define DEFAULT_EXTRUDER_0_ESTEPS 190 // e3d
+#define DEFAULT_EXTRUDER_1_ESTEPS 190 
+// #define DEFAULT_EXTRUDER_1_ESTEPS 95 // Folgertech extruder
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,3840,DEFAULT_EXTRUDER_0_ESTEPS}  // default steps per unit for Folgertech with compact extruder addition
 
 
@@ -300,8 +301,8 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 // Offset of the extruders (uncomment if using more than one and relying on firmware to position when changing).
 // The offset has to be X=0, Y=0 for the extruder 0 hotend (default extruder).
 // For the other hotends it is their distance from the extruder 0 hotend.
-#define EXTRUDER_OFFSET_X {0.0, 1.3} // (in mm) for each extruder, offset of the hotend on the X axis 2.0
-#define EXTRUDER_OFFSET_Y {0.0, 87.0}  // (in mm) for each extruder, offset of the hotend on the Y axis 86.5
+#define EXTRUDER_OFFSET_X {0.0, 57.0} // (in mm) for each extruder, offset of the hotend on the X axis 2.0
+#define EXTRUDER_OFFSET_Y {0.0, 1.5}  // (in mm) for each extruder, offset of the hotend on the Y axis 86.5
 
 //#define EXTRUDER_OFFSET_X {0.0, 0.0} // (in mm) for each extruder, offset of the hotend on the X axis
 //#define EXTRUDER_OFFSET_Y {0.0, 0.0}  // (in mm) for each extruder, offset of the hotend on the Y ax
