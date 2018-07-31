@@ -82,7 +82,7 @@
 // Z Probe (when not Z_MIN_PIN)
 //
 #ifndef Z_MIN_PROBE_PIN
-  #define Z_MIN_PROBE_PIN  32
+  #define Z_MIN_PROBE_PIN  19 // SJH: Assign to Z-max pin
 #endif
 
 //
@@ -115,9 +115,10 @@
 
 // SJH
 #define LED_PIN            13
+#define FAN_PIN            4   // See also the ifdef FAN_PIN section in code later in this file
 #define LIGHT_PIN          5 // External LED bed lamps
-#define FAN_EXT1_PIN       58 // External Fan 1
-#define FAN_EXT2_PIN       57 // External Fan 2
+#define FAN_EXT1_PIN       57 // External Fan 1 - note these swapped from convention to allow for larger header connection on expansion board
+#define FAN_EXT2_PIN       58 // External Fan 2
 
 /*
  * ==Dual fan expander instructions from Oozenest.com==
