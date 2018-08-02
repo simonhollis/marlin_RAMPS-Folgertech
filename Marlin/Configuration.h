@@ -529,7 +529,8 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 3840, 190}
+ #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 3840, 190}
+//#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 160, 3840, 190} // With new Y-axis driver, double steps
 
 /**
  * Default Max Feed Rate (mm/s)
