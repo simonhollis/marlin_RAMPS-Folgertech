@@ -872,7 +872,7 @@
  *   leveling in steps so you can manually adjust the Z height at each grid-point.
  *   With an LCD controller the process is guided step-by-step.
  */
-//#define AUTO_BED_LEVELING_3POINT
+#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
 //#define AUTO_BED_LEVELING_BILINEAR
 //#define AUTO_BED_LEVELING_UBL
@@ -950,12 +950,12 @@
 
   // 3 arbitrary points to probe.
   // A simple cross-product is used to estimate the plane of the bed.
-  #define ABL_PROBE_PT_1_X 15
-  #define ABL_PROBE_PT_1_Y 180
-  #define ABL_PROBE_PT_2_X 15
-  #define ABL_PROBE_PT_2_Y 20
-  #define ABL_PROBE_PT_3_X 170
-  #define ABL_PROBE_PT_3_Y 20
+  #define ABL_PROBE_PT_1_X 15 + X_PROBE_OFFSET_FROM_EXTRUDER
+  #define ABL_PROBE_PT_1_Y Y_BED_SIZE - Y_PROBE_OFFSET_FROM_EXTRUDER - 20
+  #define ABL_PROBE_PT_2_X 15 + X_PROBE_OFFSET_FROM_EXTRUDER
+  #define ABL_PROBE_PT_2_Y 20 + Y_PROBE_OFFSET_FROM_EXTRUDER
+  #define ABL_PROBE_PT_3_X X_BED_SIZE - X_PROBE_OFFSET_FROM_EXTRUDER - 15
+  #define ABL_PROBE_PT_3_Y 20 + Y_PROBE_OFFSET_FROM_EXTRUDER
 
 #elif ENABLED(AUTO_BED_LEVELING_UBL)
 
@@ -1034,7 +1034,7 @@
 // - Move the Z probe (or nozzle) to a defined XY point before Z Homing when homing all axes (G28).
 // - Prevent Z homing when the Z probe is outside bed area.
 //
-//#define Z_SAFE_HOMING
+#define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
   #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28).
