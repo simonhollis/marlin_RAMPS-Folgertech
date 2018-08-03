@@ -116,7 +116,15 @@
 // SJH
 #define LED_PIN            13
 #define FAN_PIN            4   // See also the ifdef FAN_PIN section in code later in this file
-#define LIGHT_PIN          5 // External LED bed lamps
+//#define LIGHT_PIN          5 // External LED bed lamps
+#define CASE_LIGHT_PIN     5   // External LED bed lamps
+/* Looks like pin 5 can't be used as hardware PWM with BLTouch,
+ *  since the timer on this pin is used by BLtouch.
+ *  Will work if moved to a different pin.
+ *  https://github.com/MarlinFirmware/Marlin/issues/5011
+ *  Try enabling PINS_DEBUGGING and use M43 to see current mapping
+ */
+#define PINS_DEBUGGING
 #define FAN_EXT1_PIN       57 // External Fan 1 - note these swapped from convention to allow for larger header connection on expansion board
 #define FAN_EXT2_PIN       58 // External Fan 2
 
