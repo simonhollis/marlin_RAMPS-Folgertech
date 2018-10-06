@@ -719,6 +719,15 @@ XYZ_CONSTS_FROM_CONFIG(signed char, home_dir, HOME_DIR);
  * ***************************************************************************
  */
 
+/* SJH */
+bool bed_disabled(void){
+  int value ;
+  pinMode(BED_DISABLE_PIN, INPUT_PULLUP) ;
+  // digitalWrite(BED_DISABLE_PIN, HIGH) ; // Legacy pull-up enable
+  value = digitalRead(BED_DISABLE_PIN) ;
+  return value == LOW ;
+}
+
 void stop();
 
 void get_available_commands();
@@ -7883,6 +7892,10 @@ inline void gcode_M109() {
    */
   inline void gcode_M190() {
     if (DEBUGGING(DRYRUN)) return;
+    if (bed_disabled()) {
+      LCD_MESSAGEPGM(MSG_BED_DISABLED);
+      return ;
+    }
 
     LCD_MESSAGEPGM(MSG_BED_HEATING);
     const bool no_wait_for_cooling = parser.seenval('S');
@@ -8099,6 +8112,10 @@ inline void gcode_M111() {
  */
 inline void gcode_M140() {
   if (DEBUGGING(DRYRUN)) return;
+  if (bed_disabled()) {
+    LCD_MESSAGEPGM(MSG_BED_DISABLED);
+    return ;
+  }
   if (parser.seenval('S')) thermalManager.setTargetBed(parser.value_celsius());
 }
 

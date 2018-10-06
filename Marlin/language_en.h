@@ -786,6 +786,9 @@
 #ifndef MSG_BED_HEATING
   #define MSG_BED_HEATING                     _UxGT("Bed Heating.")
 #endif
+#ifndef MSG_BED_DISABLED
+  #define MSG_BED_DISABLED                    _UxGT("Bed Disabled.")
+#endif
 #ifndef MSG_BED_DONE
   #define MSG_BED_DONE                        _UxGT("Bed done.")
 #endif
