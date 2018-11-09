@@ -116,8 +116,8 @@
 // SJH
 #define LED_PIN            13
 #define LIGHT_PIN          5 // External LED bed lamps
-#define FAN_EXT1_PIN       58 // External Fan 1
-#define FAN_EXT2_PIN       57 // External Fan 2
+#define FAN_EXT1_PIN       57 // External Fan 1
+#define FAN_EXT2_PIN       58 // External Fan 2
 #define BED_DISABLE_PIN    40 // Pin to disable heated bed
 /*
  * ==Dual fan expander instructions from Oozenest.com==
