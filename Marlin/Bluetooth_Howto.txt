@@ -5,7 +5,7 @@ Configuring HC06 bluetooth module:
 3) Connect the HC06
 
 4) Open up Serial Monitor in the Arduino tool
-5) Select current BT module bitrate (default 9600)
+5) Select current BT module bitrate (default 9600) and line endings to None
 6) Close Serial Monitor
 7) Pull USB connection and power cycle Arduino
 8) Re-power, re-connect and Re-open Serial Monitor with new bitrate
