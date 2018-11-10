@@ -111,7 +111,7 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 115200
+#define BAUDRATE 115200 // 921600 is what other bt module is configured to
 
 // Enable the Bluetooth serial interface on AT90USB devices
 #define BLUETOOTH
@@ -572,7 +572,6 @@
 #define DEFAULT_YJERK                 10.0
 #define DEFAULT_ZJERK                  0.3
 #define DEFAULT_EJERK                  5.0
-
 //===========================================================================
 //============================= Z Probe Options =============================
 //===========================================================================
@@ -874,8 +873,8 @@
  *   leveling in steps so you can manually adjust the Z height at each grid-point.
  *   With an LCD controller the process is guided step-by-step.
  */
-#define AUTO_BED_LEVELING_3POINT
-//#define AUTO_BED_LEVELING_LINEAR
+//#define AUTO_BED_LEVELING_3POINT
+#define AUTO_BED_LEVELING_LINEAR
 //#define AUTO_BED_LEVELING_BILINEAR
 //#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
@@ -912,6 +911,15 @@
 
 #endif
 
+/*
+ *  #define ABL_PROBE_PT_1_X 15 + X_PROBE_OFFSET_FROM_EXTRUDER
+  #define ABL_PROBE_PT_1_Y Y_BED_SIZE - Y_PROBE_OFFSET_FROM_EXTRUDER - 20
+  #define ABL_PROBE_PT_2_X 15 + X_PROBE_OFFSET_FROM_EXTRUDER
+  #define ABL_PROBE_PT_2_Y 20 + Y_PROBE_OFFSET_FROM_EXTRUDER
+  #define ABL_PROBE_PT_3_X X_BED_SIZE - X_PROBE_OFFSET_FROM_EXTRUDER - 15
+  #define ABL_PROBE_PT_3_Y 20 + Y_PROBE_OFFSET_FROM_EXTRUDER
+ */
+
 #if ENABLED(AUTO_BED_LEVELING_LINEAR) || ENABLED(AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
@@ -919,10 +927,10 @@
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
-  #define LEFT_PROBE_BED_POSITION 15
-  #define RIGHT_PROBE_BED_POSITION 170
-  #define FRONT_PROBE_BED_POSITION 20
-  #define BACK_PROBE_BED_POSITION 170
+  #define LEFT_PROBE_BED_POSITION 15 + X_PROBE_OFFSET_FROM_EXTRUDER // was 15
+  #define RIGHT_PROBE_BED_POSITION X_BED_SIZE - X_PROBE_OFFSET_FROM_EXTRUDER // was 170
+  #define FRONT_PROBE_BED_POSITION 20 + Y_PROBE_OFFSET_FROM_EXTRUDER // was 20
+  #define BACK_PROBE_BED_POSITION Y_BED_SIZE - Y_PROBE_OFFSET_FROM_EXTRUDER // was 170
 
   // The Z probe minimum outer margin (to validate G29 parameters).
   #define MIN_PROBE_EDGE 10
