@@ -1,0 +1,28 @@
+M260 A32 // Address in dec, with r/w LSB removed (so LSR by 1 bit from datasheet. i.e. address 64 -> 32 ; 65 -> 32.
+M260 B65 // store 65 dec in output buffer
+M260 S1 // Send
+M261 A32 B1 // Request 1 byte of read from address 32 (with LSB = 1 [read select] automatically appended, so this reads from address 65)
+i2c-reply: from:32 bytes:1 data:A  // reply data in ASCII
+
+
+// LED enable
+M260 A56
+M260 B0
+M260 B23
+M260 S1
+
+// LED digit 1 program
+M260 A56
+M260 B1 // Select digit 1
+M260 B7 // displays '7'
+M260 S1
+
+// LED multi-program
+M260 A56
+M260 B1 // Select digit 1
+M260 B7 // displays '7' on digit 1
+M260 B3 // digit 2 n.b. autoincrement of address. Can include ctrl (addr 0 too)
+M260 B2 // digit 3 value
+M260 B8 // digit 4 value
+M260 S1 // send
+ 
