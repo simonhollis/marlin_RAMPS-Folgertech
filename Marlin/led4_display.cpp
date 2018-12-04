@@ -1,6 +1,6 @@
 #include "led4_display.h"
 
-inline char getLEDValueFromASCII(char ascii){
+char getLEDValueFromASCII(char ascii){
   // Get value to write to LED controller PCF85741 LED segment register to represent value in ASCII passed as c
   switch (ascii){
     case '0':
@@ -25,12 +25,38 @@ inline char getLEDValueFromASCII(char ascii){
       return 111 ;
     case '-':
       return 64 ;
+    case '_':
+      return 8 ;
+    case '^': // Dash across top
+      return 1 ;
     case '.': // decimal point
       return 128 ;
     case '*': // make a degree-like lifted 'o'
-    	return 99 ;
+      return 99 ;
+    case '#': // Light all segments and decimal point
+      return 255 ;
+    case ' ':
+      return 0 ;
+    case 'o':
+      return 92 ;
+    case 'O':
+      return 63 ;
+    case 'n':
+      return 84 ;
+    case 'N':
+      return 84 ;
+    case 'F':
+      return 113 ;
+    case 'f':
+      return 113 ;
+    case 'E':
+      return 121 ;
+    case 't':
+      return 120 ;
+    case 'Z':
+      return 91 ;
     default:
-    	return 128 ;
+      return 0 ;
   }
 }
 
@@ -69,7 +95,6 @@ void displayTempOn4Digits(TWIBus i2c, Temperature thermalManager, int extruder){
 	// Get extruder[extruder] temperature and display on the 4 digit display
 	char digits[5] ; // one extra storage space to add in the degree symbol
 	float temp_f = thermalManager.current_temperature[extruder] ;
-	//int temp_i = static_cast<int>(temp_f) ; // Just discard floating bits. Could also std::floor std::ceil std::round (#include cmath)
 	int temp_i = static_cast<int>(roundf(temp_f)) ;
 	integerTo4Digits(temp_i, &digits[1]) ; // Pass the last 4 elements of array
 	digits[0] = getLEDValueFromASCII('*') ; // Display degree symbol at right hand display
