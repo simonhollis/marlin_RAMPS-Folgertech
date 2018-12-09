@@ -91,11 +91,16 @@ void display4Digits(TWIBus i2c, char digits[4]){
 	i2c.send() ;
 }
 
+
+static int last_temp = 0 ; // Store previously converted temperature
+
 void displayTempOn4Digits(TWIBus i2c, Temperature thermalManager, int extruder){
 	// Get extruder[extruder] temperature and display on the 4 digit display
 	char digits[5] ; // one extra storage space to add in the degree symbol
 	float temp_f = thermalManager.current_temperature[extruder] ;
 	int temp_i = static_cast<int>(roundf(temp_f)) ;
+	if (temp_i == last_temp) return ; // Don't need to do anything, so save CPU
+	last_temp = temp_i ; // Otherwise, update with the new value
 	integerTo4Digits(temp_i, &digits[1]) ; // Pass the last 4 elements of array
 	digits[0] = getLEDValueFromASCII('*') ; // Display degree symbol at right hand display
 	display4Digits(i2c, digits) ; // Display, discarding 1000s place

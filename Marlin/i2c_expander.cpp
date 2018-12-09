@@ -1,6 +1,8 @@
 #include "i2c_expander.h"
 
-static char io_directions[8] {255, 255, 255, 255, 255, 255, 255, 255} ; // Default to all pins input. Max 8 devices on a bus
+#define NO_I2C_EXPANDERS 8 // Max number is 8 for the PCF8574
+
+static char io_directions[NO_I2C_EXPANDERS] {255, 255, 255, 255, 255, 255, 255, 255} ; // Default to all pins input. Max 8 devices on a bus
 
 // Read a byte value from PCF8574 I2C expander with address pin values set to 'expander_adr_offset'
 char readExpanderValue(TWIBus i2c, char expander_adr_offset){
