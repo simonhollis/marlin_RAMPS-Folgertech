@@ -261,6 +261,7 @@
 #include "types.h"
 #include "gcode.h"
 #include "led4_display.h"
+#include "i2c_buttons.h"
 
 #if HAS_ABL
   #include "vector_3.h"
@@ -14213,6 +14214,7 @@ void idle(
 
   lcd_update();
   led_4display_update(i2c, thermalManager, active_extruder);
+  i2c_check_buttons(i2c) ;
 
   host_keepalive();
 

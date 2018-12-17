@@ -108,6 +108,11 @@ void displayTempOn4Digits(TWIBus i2c, Temperature thermalManager, int extruder){
 
 void led_4display_update(TWIBus i2c, Temperature thermalManager, int active_extruder) {
 	// Main function called in the Marlin_main.cpp idle() loop to update the display
-	displayTempOn4Digits(i2c, thermalManager, active_extruder) ;
+  static unsigned long prev_time = 0 ; // Previous time called
+  unsigned long time = millis() ;
+  if (time - prev_time > 500) { // Update max twice a second
+    prev_time = time ;
+	  displayTempOn4Digits(i2c, thermalManager, active_extruder) ;
+  }
 	return ;
 }

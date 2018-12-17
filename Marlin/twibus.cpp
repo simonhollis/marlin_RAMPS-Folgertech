@@ -97,10 +97,32 @@ void TWIBus::echoprefix(uint8_t bytes, const char prefix[], uint8_t adr) {
   SERIAL_ECHOPGM (" data:");
 }
 
+/*
 // static
 void TWIBus::echodata(uint8_t bytes, const char prefix[], uint8_t adr) {
   echoprefix(bytes, prefix, adr);
   while (bytes-- && Wire.available()) SERIAL_CHAR(Wire.read());
+  SERIAL_EOL();
+}
+*/
+
+// static
+void TWIBus::echodata(uint8_t bytes, const char prefix[], uint8_t adr) {
+  echoprefix(bytes, prefix, adr);
+  while (bytes-- && Wire.available()) {
+	  unsigned char digit1, digit2, digit3 ;
+	  unsigned char data = Wire.read() ;
+	  // Convert to decimal before sending to the terminal
+	  // to prevent unprintable character problem on receiving end
+	  digit3 = data % 10 ;
+	  data -= digit3 ;
+	  digit2 = (data % 100) / 10 ;
+	  data -= digit2 ;
+	  digit1 = data / 100 ;
+	  SERIAL_CHAR(digit1 + 48);
+	  SERIAL_CHAR(digit2 + 48);
+	  SERIAL_CHAR(digit3 + 48);
+  }
   SERIAL_EOL();
 }
 
