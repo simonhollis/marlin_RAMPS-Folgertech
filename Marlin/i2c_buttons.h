@@ -6,5 +6,6 @@
 unsigned char i2c_read_buttons_common_with_leds(TWIBus i2c) ;
 inline void i2c_write_leds_common_with_buttons(TWIBus i2c, unsigned char value) ;
 void i2c_check_buttons(TWIBus i2c) ;
+inline void i2c_do_flash(TWIBus i2c) ;
 
 #endif

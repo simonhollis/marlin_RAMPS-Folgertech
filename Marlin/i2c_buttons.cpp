@@ -1,6 +1,7 @@
 #include "i2c_buttons.h"
 #include "i2c_expander.h"
 #include "Marlin.h" // For millis()
+#include "temperature.h" // For thermalManager
 
 /* For momentary actions, consider using
  * built-in 'millis()' to get millisecond count
@@ -107,20 +108,79 @@ unsigned char digit1, digit2, digit3 ;
 }
 
 
+#define I2C_FLASH_DELAY 500 // 10ms flash frequency
+inline void i2c_do_flash(TWIBus i2c){
+	static unsigned long prev_time = 0 ;
+	static bool on = false ;
+	unsigned long time = millis() ;
+
+	if (time - prev_time > I2C_FLASH_DELAY){
+		if (on){
+			writeExpanderValueSafe(i2c, I2C_BTNLEDS_OFFSET, led_state | I2C_BTNLEDS_MASK) ; // back to normal
+			on = false ;
+		}
+		else {
+			writeExpanderValueSafe(i2c, I2C_BTNLEDS_OFFSET, 0x0 | I2C_BTNLEDS_MASK) ; // All on
+			on = true ;
+		}
+		prev_time = time ;
+	}
+}
+
+
+#define PREHEAT_EXTRUDER 0 // Which extruder to preheat
+char i2c_read_switch(TWIBus i2c){
+  // Read 3-way switch position
+  // TODO: Need to implement
+  return PREHEAT_EXTRUDER ; // Hard code the return for now
+}
+
+#define I2C_BTN_PREHEAT 5 // Bit position of bed head button
+#define PREHEAT_TEMP 200 // Preheat target temperature
+#define I2C_BTN_BED_HEAT 4 // Bit position of bed head button
+#define I2C_BTN_BED_HEAT_TEMP 70 // Target temp for heated bed
+void i2c_process_buttons(char pressed, char toggle_switch_value){
+	static char prev_states ;
+	// Look at buttons and do actions depending on them
+	char changed = pressed ^ prev_states ; // What buttons have changed
+	prev_states = pressed ;
+	for (int i = 0 ; i < 8 ; i++) {
+		if ((changed & (0x01 << i)) != 0) { // That bit changed
+			bool bit_value = ((0x01 << i) & pressed) != 0 ;
+			switch (i){
+				case (I2C_BTN_BED_HEAT):
+						if (bit_value) thermalManager.setTargetBed(I2C_BTN_BED_HEAT_TEMP);
+						else thermalManager.setTargetBed(0) ;
+            break ;
+
+        case (I2C_BTN_PREHEAT):
+            if (bit_value) thermalManager.setTargetHotend(PREHEAT_TEMP, (int) toggle_switch_value);
+            else thermalManager.setTargetHotend(0, (int) toggle_switch_value);
+            break ;
+			}
+		}
+	}
+}
+
 void i2c_check_buttons(TWIBus i2c){
 	static unsigned long prev_time = 0 ; // Previous time buttons were checked
 	static bool initialised = false ;
 	unsigned long time = millis() ;
-	if (time - prev_time > 333) { // Check max 3 times a second
-		prev_time = time ;
-		if (initialised == false) {
+	if (initialised == false) {
 			setExpanderDirections(i2c, I2C_BTNLEDS_OFFSET, I2C_BTNLEDS_MASK) ;
 			initialised = true ;
-		}
+	}
+
+	i2c_do_flash(i2c) ; // Flash LEDs
+
+	if (time - prev_time > 333) { // Check max 3 times a second
+			prev_time = time ;
 		// Check buttons
 		//unsigned char pressed = readExpanderValue(i2c, I2C_BTNLEDS_OFFSET) ; // Flashes the LEDs :)
 		unsigned char pressed = i2c_read_buttons_common_with_leds(i2c) ;
 		i2c_write_leds_common_with_buttons(i2c, ~pressed) ; // Light only buttons that are pressed
+    unsigned char toggle_switch_value = i2c_read_switch(i2c) ;
+		i2c_process_buttons(pressed, toggle_switch_value) ; // Do the button actions
     //echoWord(pressed) ;
 	}
 }
