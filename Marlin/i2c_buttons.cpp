@@ -2,6 +2,7 @@
 #include "i2c_expander.h"
 #include "Marlin.h" // For millis()
 #include "temperature.h" // For thermalManager
+#include "stepper.h" // for stepper.
 
 /* For momentary actions, consider using
  * built-in 'millis()' to get millisecond count
@@ -57,6 +58,12 @@ inline void button_stop(bool pressed){
 	}
 }
 */
+#define I2C_BTN_OFFSET 1 // offset of the button press I2C expander on the I2C bus
+#define I2C_BTN_MASK 0xff // What to always set to input
+unsigned char i2c_read_buttons(TWIBus i2c){
+	unsigned char value = readExpanderValue(i2c, I2C_BTN_OFFSET) ;
+	return ~value ; // Buttons are active low, so invert
+}
 
 #define I2C_BUTTON_DRIVE_PIN 7 // bit position of the N/O voltage sink terminal
 #define I2C_BTNLEDS_OFFSET 0 // offset of the I2C expander on the I2C bus
@@ -91,6 +98,15 @@ inline void i2c_write_leds_common_with_buttons(TWIBus i2c, unsigned char value){
 	writeExpanderValueSafe(i2c, I2C_BTNLEDS_OFFSET, led_state) ;
 }
 
+#define I2C_LEDS_MASK 0x00 // Which bits are LEDs (0 for an LED). Bit of an overlap with the expander direction setting
+#define I2C_LEDS_OFFSET 0 // Bus ID of LED expander
+inline void i2c_write_leds(TWIBus i2c, unsigned char value){
+  if ((value | I2C_LEDS_MASK) != led_state) {
+	  led_state = value | I2C_LEDS_MASK ; // Mask off those not LEDs
+	  writeExpanderValueSafe(i2c, I2C_LEDS_OFFSET, led_state) ;
+  }
+}
+
 
 void echoWord(unsigned char value) {
 unsigned char digit1, digit2, digit3 ;
@@ -112,18 +128,19 @@ unsigned char digit1, digit2, digit3 ;
 inline void i2c_do_flash(TWIBus i2c){
 	static unsigned long prev_time = 0 ;
 	static bool on = false ;
-	unsigned long time = millis() ;
+	unsigned long timer ;
+	timer = millis() ;
 
-	if (time - prev_time > I2C_FLASH_DELAY){
+	if (timer - prev_time > I2C_FLASH_DELAY){
 		if (on){
-			writeExpanderValueSafe(i2c, I2C_BTNLEDS_OFFSET, led_state | I2C_BTNLEDS_MASK) ; // back to normal
+			writeExpanderValueSafe(i2c, I2C_LEDS_OFFSET, led_state | I2C_LEDS_MASK) ; // back to normal
 			on = false ;
 		}
 		else {
-			writeExpanderValueSafe(i2c, I2C_BTNLEDS_OFFSET, 0x0 | I2C_BTNLEDS_MASK) ; // All on
+			writeExpanderValueSafe(i2c, I2C_LEDS_OFFSET, 0x0 | I2C_LEDS_MASK) ; // All on
 			on = true ;
 		}
-		prev_time = time ;
+		prev_time = timer ;
 	}
 }
 
@@ -139,6 +156,7 @@ char i2c_read_switch(TWIBus i2c){
 #define PREHEAT_TEMP 200 // Preheat target temperature
 #define I2C_BTN_BED_HEAT 4 // Bit position of bed head button
 #define I2C_BTN_BED_HEAT_TEMP 70 // Target temp for heated bed
+#define I2C_BTN_DISABLE_STEPPERS 2 // Disable steppers when pressed
 void i2c_process_buttons(char pressed, char toggle_switch_value){
 	static char prev_states ;
 	// Look at buttons and do actions depending on them
@@ -157,6 +175,11 @@ void i2c_process_buttons(char pressed, char toggle_switch_value){
             if (bit_value) thermalManager.setTargetHotend(PREHEAT_TEMP, (int) toggle_switch_value);
             else thermalManager.setTargetHotend(0, (int) toggle_switch_value);
             break ;
+
+        case (I2C_BTN_DISABLE_STEPPERS):
+			if (bit_value) stepper.finish_and_disable() ;
+			else enable_all_steppers();
+        	break ;
 			}
 		}
 	}
@@ -165,22 +188,26 @@ void i2c_process_buttons(char pressed, char toggle_switch_value){
 void i2c_check_buttons(TWIBus i2c){
 	static unsigned long prev_time = 0 ; // Previous time buttons were checked
 	static bool initialised = false ;
-	unsigned long time = millis() ;
+	unsigned long timer = millis() ;
 	if (initialised == false) {
-			setExpanderDirections(i2c, I2C_BTNLEDS_OFFSET, I2C_BTNLEDS_MASK) ;
+			setExpanderDirections(i2c, I2C_LEDS_OFFSET, I2C_LEDS_MASK) ;
+			setExpanderDirections(i2c, I2C_BTN_OFFSET, I2C_BTN_MASK) ;
+			unsigned char pressed = i2c_read_buttons(i2c) ;
 			initialised = true ;
 	}
 
-	i2c_do_flash(i2c) ; // Flash LEDs
+	//i2c_do_flash(i2c) ; // Flash LEDs
 
-	if (time - prev_time > 333) { // Check max 3 times a second
-			prev_time = time ;
+	if (timer - prev_time > 333) { // Check max 3 times a second
+			prev_time = timer ;
 		// Check buttons
 		//unsigned char pressed = readExpanderValue(i2c, I2C_BTNLEDS_OFFSET) ; // Flashes the LEDs :)
-		unsigned char pressed = i2c_read_buttons_common_with_leds(i2c) ;
-		i2c_write_leds_common_with_buttons(i2c, ~pressed) ; // Light only buttons that are pressed
-    unsigned char toggle_switch_value = i2c_read_switch(i2c) ;
+		//unsigned char pressed = i2c_read_buttons_common_with_leds(i2c) ;
+		unsigned char pressed = i2c_read_buttons(i2c) ;
+		i2c_write_leds(i2c, ~pressed) ; // Light only buttons that are pressed
+		unsigned char toggle_switch_value = i2c_read_switch(i2c) ;
 		i2c_process_buttons(pressed, toggle_switch_value) ; // Do the button actions
     //echoWord(pressed) ;
 	}
+ else i2c_do_flash(i2c) ; // Flash LEDs
 }
