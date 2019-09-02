@@ -156,9 +156,10 @@ char i2c_read_switch(TWIBus i2c){
 #define PREHEAT_TEMP 200 // Preheat target temperature
 #define I2C_BTN_BED_HEAT 4 // Bit position of bed head button
 #define I2C_BTN_BED_HEAT_TEMP 70 // Target temp for heated bed
-#define I2C_BTN_DISABLE_STEPPERS 2 // Disable steppers when pressed
+#define I2C_BTN_ENABLE_STEPPERS 2 // Disable steppers when pressed
+#define I2C_BTN_HOME 1 // Home button
 void i2c_process_buttons(char pressed, char toggle_switch_value){
-	static char prev_states ;
+	static char prev_states = I2C_BTN_ENABLE_STEPPERS ; // Default to on
 	// Look at buttons and do actions depending on them
 	char changed = pressed ^ prev_states ; // What buttons have changed
 	prev_states = pressed ;
@@ -176,9 +177,14 @@ void i2c_process_buttons(char pressed, char toggle_switch_value){
             else thermalManager.setTargetHotend(0, (int) toggle_switch_value);
             break ;
 
-        case (I2C_BTN_DISABLE_STEPPERS):
-			if (bit_value) stepper.finish_and_disable() ;
-			else enable_all_steppers();
+        case (I2C_BTN_ENABLE_STEPPERS):
+			if (bit_value) enable_all_steppers();
+			else stepper.finish_and_disable() ;
+        	break ;
+
+        case (I2C_BTN_HOME):
+        	// Trigger on transition, not just one of pushed or unpushed
+			//gcode_G28(true) ;
         	break ;
 			}
 		}

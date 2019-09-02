@@ -10063,6 +10063,19 @@ inline void gcode_M502() {
       park_point.y += (active_extruder ? hotend_offset[Y_AXIS][active_extruder] : 0);
     #endif
 
+     /*
+    // SJH Change
+	#if ENABLED(ULTIPANEL)
+          lcd_advanced_pause_show_message(ADVANCED_PAUSE_MESSAGE_CHANGE_QUESTION);
+    #endif
+
+        // Wait for LCD click or M108
+        while (wait_for_user) idle(true);
+
+
+    // End SJH change
+	*/
+
     // Unload filament
     const float unload_length = parser.seen('U') ? parser.value_axis_units(E_AXIS) : 0
       #if defined(FILAMENT_CHANGE_UNLOAD_LENGTH) && FILAMENT_CHANGE_UNLOAD_LENGTH > 0

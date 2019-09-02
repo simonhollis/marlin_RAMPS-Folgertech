@@ -4220,6 +4220,20 @@ void kill_screen(const char* lcd_msg) {
       END_SCREEN();
     }
 
+
+    void lcd_advanced_pause_change_question() {
+      START_SCREEN();
+      STATIC_ITEM(MSG_FILAMENT_CHANGE_HEADER, true, true);
+      STATIC_ITEM(MSG_FILAMENT_CHANGE_RESUME_1);
+	#ifdef MSG_FILAMENT_CHANGE_RESUME_2
+      STATIC_ITEM(MSG_FILAMENT_CHANGE_RESUME_2);
+	#endif
+      STATIC_ITEM(MSG_FILAMENT_CHANGE_QUESTION);
+      HOTEND_STATUS_ITEM();
+      END_SCREEN();
+    }
+
+
     void lcd_advanced_pause_show_message(const AdvancedPauseMessage message) {
       switch (message) {
         case ADVANCED_PAUSE_MESSAGE_INIT:
@@ -4262,6 +4276,10 @@ void kill_screen(const char* lcd_msg) {
         case ADVANCED_PAUSE_MESSAGE_STATUS:
           lcd_return_to_status();
           break;
+        case ADVANCED_PAUSE_MESSAGE_CHANGE_QUESTION:
+        	defer_return_to_status = true;
+        	lcd_goto_screen(lcd_advanced_pause_change_question);
+        	break ;
       }
     }
 
