@@ -115,10 +115,19 @@
 
 // SJH
 #define LED_PIN            13
-#define LIGHT_PIN          5 // External LED bed lamps
+#define LIGHT_PIN          6 // External LED bed lamps # See about usable PWM pins below:
 #define FAN_EXT1_PIN       57 // External Fan 1
 #define FAN_EXT2_PIN       58 // External Fan 2
 #define BED_DISABLE_PIN    40 // Pin to disable heated bed
+/* 
+ *  Light / Fan will only dim if attached to a usable PWM pin. List below shows them
+ *  Subtract SPINDLE_LASER_PWM_PIN if SPINDLE_LASER_ENABLE is true
+ *  Also, pin 5 seems to be taken by a hardware timer, so is digital only. May be able to change by changing the timer used fy the motors.
+ *  #define USEABLE_HARDWARE_PWM(p) (PWM_PINS(p) && !PWM_CHK(p))
+ *  #if AVR_ATmega2560_FAMILY
+ *  #define PWM_PINS(p)  ((p >= 2 && p <= 10 ) || p ==  13 || p ==  44 || p ==  45 || p ==  46 )
+ */
+
 /*
  * ==Dual fan expander instructions from Oozenest.com==
  * Plug the RAMPS fan extender board into the D4 pins on your RAMPS Board. 
