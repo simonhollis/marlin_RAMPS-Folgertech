@@ -881,8 +881,8 @@
   #define PAUSE_PARK_RETRACT_FEEDRATE 60      // Initial retract feedrate in mm/s
   #define PAUSE_PARK_RETRACT_LENGTH 2         // Initial retract in mm
                                               // It is a short retract used immediately after print interrupt before move to filament exchange position
-  #define FILAMENT_CHANGE_UNLOAD_FEEDRATE 10  // Unload filament feedrate in mm/s - filament unloading can be fast
-  #define FILAMENT_CHANGE_UNLOAD_LENGTH 100   // Unload filament length from hotend in mm
+  #define FILAMENT_CHANGE_UNLOAD_FEEDRATE 2  // Unload filament feedrate in mm/s - filament unloading can be fast // SJH - was 10
+  #define FILAMENT_CHANGE_UNLOAD_LENGTH 0   // Unload filament length from hotend in mm // SJH- was 100
                                               // Longer length for bowden printers to unload filament from whole bowden tube,
                                               // shorter length for printers without bowden to unload filament from extruder only,
                                               // 0 to disable unloading for manual unloading
