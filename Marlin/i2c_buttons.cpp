@@ -192,6 +192,8 @@ void i2c_process_buttons(char pressed, char toggle_switch_value){
 }
 
 void i2c_check_buttons(TWIBus i2c){
+  return ;
+  /*
 	static unsigned long prev_time = 0 ; // Previous time buttons were checked
 	static bool initialised = false ;
 	unsigned long timer = millis() ;
@@ -216,4 +218,5 @@ void i2c_check_buttons(TWIBus i2c){
     //echoWord(pressed) ;
 	}
  else i2c_do_flash(i2c) ; // Flash LEDs
+ */
 }
