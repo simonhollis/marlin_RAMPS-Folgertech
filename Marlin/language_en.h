@@ -176,7 +176,7 @@
 #endif
 
 #ifndef MSG_UBL_DOING_G29
-  #define MSG_UBL_DOING_G29                   _UxGT("Doing G29")
+  #define MSG_UBL_DOING_G29                   _UxGT("UBL Bed leveling...")
 #endif
 #ifndef MSG_UBL_UNHOMED
   #define MSG_UBL_UNHOMED                     _UxGT("Home XYZ first")

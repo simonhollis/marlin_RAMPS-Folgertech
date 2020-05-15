@@ -874,9 +874,9 @@
  *   With an LCD controller the process is guided step-by-step.
  */
 //#define AUTO_BED_LEVELING_3POINT
-#define AUTO_BED_LEVELING_LINEAR
+//#define AUTO_BED_LEVELING_LINEAR
 //#define AUTO_BED_LEVELING_BILINEAR
-//#define AUTO_BED_LEVELING_UBL
+#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
 
 /**
@@ -927,8 +927,8 @@
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
-  #define LEFT_PROBE_BED_POSITION 15 + X_PROBE_OFFSET_FROM_EXTRUDER // was 15
-  #define RIGHT_PROBE_BED_POSITION X_BED_SIZE - X_PROBE_OFFSET_FROM_EXTRUDER // was 170
+  #define LEFT_PROBE_BED_POSITION 20 + X_PROBE_OFFSET_FROM_EXTRUDER // was 15
+  #define RIGHT_PROBE_BED_POSITION X_BED_SIZE + X_PROBE_OFFSET_FROM_EXTRUDER - 20 // was 170 
   #define FRONT_PROBE_BED_POSITION 20 + Y_PROBE_OFFSET_FROM_EXTRUDER // was 20
   #define BACK_PROBE_BED_POSITION Y_BED_SIZE - Y_PROBE_OFFSET_FROM_EXTRUDER // was 170
 
@@ -979,12 +979,12 @@
   #define GRID_MAX_POINTS_X 10      // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
-  #define UBL_PROBE_PT_1_X 39       // Probing points for 3-Point leveling of the mesh
-  #define UBL_PROBE_PT_1_Y 180
-  #define UBL_PROBE_PT_2_X 39
-  #define UBL_PROBE_PT_2_Y 20
-  #define UBL_PROBE_PT_3_X 180
-  #define UBL_PROBE_PT_3_Y 20
+  #define UBL_PROBE_PT_1_X 20 + X_PROBE_OFFSET_FROM_EXTRUDER    // Probing points for 3-Point leveling of the mesh
+  #define UBL_PROBE_PT_1_Y 20 + Y_PROBE_OFFSET_FROM_EXTRUDER
+  #define UBL_PROBE_PT_2_X (X_BED_SIZE - X_PROBE_OFFSET_FROM_EXTRUDER - 20) / 2
+  #define UBL_PROBE_PT_2_Y (Y_BED_SIZE - Y_PROBE_OFFSET_FROM_EXTRUDER - 20) / 2
+  #define UBL_PROBE_PT_3_X X_BED_SIZE - X_PROBE_OFFSET_FROM_EXTRUDER - 20
+  #define UBL_PROBE_PT_3_Y Y_BED_SIZE - Y_PROBE_OFFSET_FROM_EXTRUDER - 20
 
   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
   #define UBL_SAVE_ACTIVE_ON_M500   // Save the currently active mesh in the current slot on M500
@@ -1155,15 +1155,16 @@
 //
 //#define TEMPERATURE_UNITS_SUPPORT
 
+
 // @section temperature
 
 // Preheat Constants
-#define PREHEAT_1_TEMP_HOTEND 250
-#define PREHEAT_1_TEMP_BED     90
+#define PREHEAT_1_TEMP_HOTEND 200 // For PLA
+#define PREHEAT_1_TEMP_BED     70
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
-#define PREHEAT_2_TEMP_HOTEND 200
-#define PREHEAT_2_TEMP_BED    70
+#define PREHEAT_2_TEMP_HOTEND 225  // For ABS
+#define PREHEAT_2_TEMP_BED    90
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
 /**
