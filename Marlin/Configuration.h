@@ -530,7 +530,8 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
- #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 3840, 190}
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 404, 190}
+//#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 3840, 190}  // Before lead-screws installed
 //#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 160, 3840, 190} // With new Y-axis driver, double steps
 
 /**
@@ -538,7 +539,7 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 300, 300, 3, 25} // Folgertech was {250, 250, 2, 22}
+#define DEFAULT_MAX_FEEDRATE          { 300, 300, 10, 25} // Folgertech was {250, 250, 2, 22}
 
 /**
  * Default Max Acceleration (change/s) change = mm/s
