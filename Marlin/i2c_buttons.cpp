@@ -157,6 +157,7 @@ char i2c_read_switch(TWIBus i2c){
 #define PREHEAT_TEMP 200 // Preheat target temperature
 #define I2C_BTN_BED_HEAT 4 // Bit position of bed head button
 #define I2C_BTN_BED_HEAT_TEMP 70 // Target temp for heated bed
+#define I2C_BTN_Z_OFFSET 3 // Z offset menu
 #define I2C_BTN_ENABLE_STEPPERS 2 // Disable steppers when pressed
 #define I2C_BTN_HOME 1 // Home button
 void i2c_process_buttons(char pressed, char toggle_switch_value){
@@ -165,11 +166,6 @@ void i2c_process_buttons(char pressed, char toggle_switch_value){
 	char changed = pressed ^ prev_states ; // What buttons have changed
 	prev_states = pressed ;
 
-	if (changed & (0x01 << I2C_BTN_ENABLE_STEPPERS)) {
-		lcd_goto_screen(lcd_babystep_zoffset, 0);
-	}
-
-	/*
 	for (int i = 0 ; i < 8 ; i++) {
 		if ((changed & (0x01 << i)) != 0) { // That bit changed
 			bool bit_value = ((0x01 << i) & pressed) != 0 ;
@@ -189,6 +185,10 @@ void i2c_process_buttons(char pressed, char toggle_switch_value){
 			else stepper.finish_and_disable() ;
         	break ;
 
+        case (I2C_BTN_Z_OFFSET):
+          lcd_goto_screen(lcd_babystep_zoffset, 0);
+          break;
+
         case (I2C_BTN_HOME):
         	// Trigger on transition, not just one of pushed or unpushed
 			//gcode_G28(true) ;
@@ -196,11 +196,9 @@ void i2c_process_buttons(char pressed, char toggle_switch_value){
 			}
 		}
 	}
-	*/
 }
 
 void i2c_check_buttons(TWIBus i2c){
-  return ;
 	static unsigned long prev_time = 0 ; // Previous time buttons were checked
 	static bool initialised = false ;
 	unsigned long timer = millis() ;
