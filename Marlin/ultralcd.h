@@ -54,9 +54,12 @@
   void lcd_kill_screen();
   void kill_screen(const char* lcd_msg);
   bool lcd_detected(void);
+  void lcd_goto_screen(screenFunc_t screen, const uint32_t encoder = 0);
 
   extern uint8_t lcdDrawUpdate;
   inline void lcd_refresh() { lcdDrawUpdate = LCDVIEW_CLEAR_CALL_REDRAW; }
+
+  void lcd_babystep_zoffset(); // Screen menu
 
   #if HAS_BUZZER
     void lcd_buzz(const long duration, const uint16_t freq);

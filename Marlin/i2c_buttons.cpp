@@ -3,6 +3,7 @@
 #include "Marlin.h" // For millis()
 #include "temperature.h" // For thermalManager
 #include "stepper.h" // for stepper.
+#include "ultralcd.h"
 
 /* For momentary actions, consider using
  * built-in 'millis()' to get millisecond count
@@ -163,6 +164,12 @@ void i2c_process_buttons(char pressed, char toggle_switch_value){
 	// Look at buttons and do actions depending on them
 	char changed = pressed ^ prev_states ; // What buttons have changed
 	prev_states = pressed ;
+
+	if (changed & (0x01 << I2C_BTN_ENABLE_STEPPERS)) {
+		lcd_goto_screen(lcd_babystep_zoffset);
+	}
+
+	/*
 	for (int i = 0 ; i < 8 ; i++) {
 		if ((changed & (0x01 << i)) != 0) { // That bit changed
 			bool bit_value = ((0x01 << i) & pressed) != 0 ;
@@ -189,11 +196,11 @@ void i2c_process_buttons(char pressed, char toggle_switch_value){
 			}
 		}
 	}
+	*/
 }
 
 void i2c_check_buttons(TWIBus i2c){
   return ;
-  /*
 	static unsigned long prev_time = 0 ; // Previous time buttons were checked
 	static bool initialised = false ;
 	unsigned long timer = millis() ;
@@ -218,5 +225,4 @@ void i2c_check_buttons(TWIBus i2c){
     //echoWord(pressed) ;
 	}
  else i2c_do_flash(i2c) ; // Flash LEDs
- */
 }
