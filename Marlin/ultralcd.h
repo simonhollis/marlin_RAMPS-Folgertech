@@ -54,7 +54,8 @@
   void lcd_kill_screen();
   void kill_screen(const char* lcd_msg);
   bool lcd_detected(void);
-  void lcd_goto_screen(screenFunc_t screen, const uint32_t encoder = 0);
+  typedef void (*screenFunc_t)();
+  void lcd_goto_screen(screenFunc_t screen, const uint32_t encoder);
 
   extern uint8_t lcdDrawUpdate;
   inline void lcd_refresh() { lcdDrawUpdate = LCDVIEW_CLEAR_CALL_REDRAW; }

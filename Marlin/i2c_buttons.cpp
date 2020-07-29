@@ -166,7 +166,7 @@ void i2c_process_buttons(char pressed, char toggle_switch_value){
 	prev_states = pressed ;
 
 	if (changed & (0x01 << I2C_BTN_ENABLE_STEPPERS)) {
-		lcd_goto_screen(lcd_babystep_zoffset);
+		lcd_goto_screen(lcd_babystep_zoffset, 0);
 	}
 
 	/*
