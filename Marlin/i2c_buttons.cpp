@@ -174,16 +174,19 @@ void i2c_process_buttons(char pressed, char toggle_switch_value){
 						if (bit_value) thermalManager.setTargetBed(I2C_BTN_BED_HEAT_TEMP);
 						else thermalManager.setTargetBed(0) ;
             break ;
-
+         /* brownout when this button is toggled to on
         case (I2C_BTN_PREHEAT):
             if (bit_value) thermalManager.setTargetHotend(PREHEAT_TEMP, (int) toggle_switch_value);
             else thermalManager.setTargetHotend(0, (int) toggle_switch_value);
             break ;
-
+        */
+        
+        /* brownout when this button is toggled to on
         case (I2C_BTN_ENABLE_STEPPERS):
 			if (bit_value) enable_all_steppers();
 			else stepper.finish_and_disable() ;
         	break ;
+       */
 
         case (I2C_BTN_Z_OFFSET):
           lcd_goto_screen(lcd_babystep_zoffset, 0);
