@@ -153,6 +153,12 @@ char i2c_read_switch(TWIBus i2c){
   return PREHEAT_EXTRUDER ; // Hard code the return for now
 }
 
+char set_bit_with_current_press(int pos, char pressed)
+{
+  // Update only a single bit at position 'pos' with the state from globally pressed
+  
+}
+
 #define I2C_BTN_PREHEAT 5 // Bit position of bed head button
 #define PREHEAT_TEMP 200 // Preheat target temperature
 #define I2C_BTN_BED_HEAT 4 // Bit position of bed head button
@@ -164,16 +170,18 @@ void i2c_process_buttons(char pressed, char toggle_switch_value){
 	static char prev_states = I2C_BTN_ENABLE_STEPPERS ; // Default to on
 	// Look at buttons and do actions depending on them
 	char changed = pressed ^ prev_states ; // What buttons have changed
-	prev_states = pressed ;
+	prev_states = pressed ;  // Since only one thing is processed at once in the switch, should make this only update the processed bit.
 
 	for (int i = 0 ; i < 8 ; i++) {
 		if ((changed & (0x01 << i)) != 0) { // That bit changed
 			bool bit_value = ((0x01 << i) & pressed) != 0 ;
 			switch (i){
+				/*
 				case (I2C_BTN_BED_HEAT):
 						if (bit_value) thermalManager.setTargetBed(I2C_BTN_BED_HEAT_TEMP);
 						else thermalManager.setTargetBed(0) ;
             break ;
+            *.
          /* brownout when this button is toggled to on
         case (I2C_BTN_PREHEAT):
             if (bit_value) thermalManager.setTargetHotend(PREHEAT_TEMP, (int) toggle_switch_value);
@@ -222,7 +230,7 @@ void i2c_check_buttons(TWIBus i2c){
 		unsigned char pressed = i2c_read_buttons(i2c) ;
 		i2c_write_leds(i2c, ~pressed) ; // Light only buttons that are pressed
 		unsigned char toggle_switch_value = i2c_read_switch(i2c) ;
-		i2c_process_buttons(pressed, toggle_switch_value) ; // Do the button actions
+		//i2c_process_buttons(pressed, toggle_switch_value) ; // Do the button actions
     //echoWord(pressed) ;
 	}
  else i2c_do_flash(i2c) ; // Flash LEDs
