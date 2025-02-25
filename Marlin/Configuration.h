@@ -530,7 +530,7 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 404, 190}
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 404, 100}
 //#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 3840, 190}  // Before lead-screws installed
 //#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 160, 3840, 190} // With new Y-axis driver, double steps
 
@@ -687,9 +687,9 @@
  *      O-- FRONT --+
  *    (0,0)
  */
-#define X_PROBE_OFFSET_FROM_EXTRUDER 28  // X offset: -left  +right  [of the nozzle]
+#define X_PROBE_OFFSET_FROM_EXTRUDER 29  // X offset: -left  +right  [of the nozzle]
 #define Y_PROBE_OFFSET_FROM_EXTRUDER 0  // Y offset: -front +behind [the nozzle]
-#define Z_PROBE_OFFSET_FROM_EXTRUDER -1.0   // Z offset: -below +above  [the nozzle] - decrease to lower extruders; increase to raise
+#define Z_PROBE_OFFSET_FROM_EXTRUDER -1.8   // Z offset: -below +above  [the nozzle] - decrease to lower extruders; increase to raise
 
 // X and Y axis travel speed (mm/m) between probes
 #define XY_PROBE_SPEED 8000
@@ -885,7 +885,7 @@
  * Turn on with the command 'M111 S32'.
  * NOTE: Requires a lot of PROGMEM!
  */
-//#define DEBUG_LEVELING_FEATURE
+#define DEBUG_LEVELING_FEATURE
 
 #if ENABLED(MESH_BED_LEVELING) || ENABLED(AUTO_BED_LEVELING_BILINEAR) || ENABLED(AUTO_BED_LEVELING_UBL)
   // Gradually reduce leveling correction until a set height is reached,
@@ -943,7 +943,7 @@
 
     // Beyond the probed grid, continue the implied tilt?
     // Default is to maintain the height of the nearest edge.
-    //#define EXTRAPOLATE_BEYOND_GRID
+    #define EXTRAPOLATE_BEYOND_GRID
 
     //
     // Experimental Subdivision of the grid by Catmull-Rom method.
@@ -976,16 +976,16 @@
 
   //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 1              // Mesh inset margin on print area
-  #define GRID_MAX_POINTS_X 10      // Don't use more than 15 points per axis, implementation limited.
-  #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
+  #define MESH_INSET 0              // Mesh inset margin on print area
+  #define GRID_MAX_POINTS_X 7      // Don't use more than 15 points per axis, implementation limited.
+  #define GRID_MAX_POINTS_Y 9
 
-  #define UBL_PROBE_PT_1_X 20 + X_PROBE_OFFSET_FROM_EXTRUDER    // Probing points for 3-Point leveling of the mesh
-  #define UBL_PROBE_PT_1_Y 20 + Y_PROBE_OFFSET_FROM_EXTRUDER
-  #define UBL_PROBE_PT_2_X (X_BED_SIZE - X_PROBE_OFFSET_FROM_EXTRUDER - 20) / 2
-  #define UBL_PROBE_PT_2_Y (Y_BED_SIZE - Y_PROBE_OFFSET_FROM_EXTRUDER - 20) / 2
-  #define UBL_PROBE_PT_3_X X_BED_SIZE - X_PROBE_OFFSET_FROM_EXTRUDER - 20
-  #define UBL_PROBE_PT_3_Y Y_BED_SIZE - Y_PROBE_OFFSET_FROM_EXTRUDER - 20
+  #define UBL_PROBE_PT_1_X 5 + X_PROBE_OFFSET_FROM_EXTRUDER    // Probing points for 3-Point leveling of the mesh
+  #define UBL_PROBE_PT_1_Y 5 + Y_PROBE_OFFSET_FROM_EXTRUDER
+  #define UBL_PROBE_PT_2_X (X_BED_SIZE - X_PROBE_OFFSET_FROM_EXTRUDER - 5) / 2
+  #define UBL_PROBE_PT_2_Y (Y_BED_SIZE - Y_PROBE_OFFSET_FROM_EXTRUDER - 5) / 2
+  #define UBL_PROBE_PT_3_X X_BED_SIZE - X_PROBE_OFFSET_FROM_EXTRUDER - 5
+  #define UBL_PROBE_PT_3_Y Y_BED_SIZE - Y_PROBE_OFFSET_FROM_EXTRUDER - 5
 
   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
   #define UBL_SAVE_ACTIVE_ON_M500   // Save the currently active mesh in the current slot on M500
@@ -996,9 +996,9 @@
   //=================================== Mesh ==================================
   //===========================================================================
 
-  #define MESH_INSET 10          // Mesh inset margin on print area
-  #define GRID_MAX_POINTS_X 3    // Don't use more than 7 points per axis, implementation limited.
-  #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
+//  #define MESH_INSET 10          // Mesh inset margin on print area
+//  #define GRID_MAX_POINTS_X 3    // Don't use more than 7 points per axis, implementation limited.
+//  #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   //#define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
 
@@ -1016,7 +1016,7 @@
 #endif
 
 // Add a menu item to move between bed corners for manual bed adjustment
-//#define LEVEL_BED_CORNERS
+#define LEVEL_BED_CORNERS
 
 /**
  * Commands to execute at the end of G29 probing.
@@ -1226,7 +1226,7 @@
  * Attention: EXPERIMENTAL. G-code arguments may change.
  *
  */
-//#define NOZZLE_CLEAN_FEATURE
+#define NOZZLE_CLEAN_FEATURE
 
 #if ENABLED(NOZZLE_CLEAN_FEATURE)
   // Default number of pattern repetitions
